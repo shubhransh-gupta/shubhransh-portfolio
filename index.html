@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shubhransh Gupta — Senior iOS Engineer · Coupang</title>
+<meta name="description" content="Shubhransh Gupta — Senior iOS Engineer at Coupang. 5+ years building high-scale mobile platforms at Coupang, Navi, MakeMyTrip & Nuclei."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&family=Sorts+Mill+Goudy&family=Josefin+Sans:wght@600&family=Open+Sans:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--paper:#e6e0cf;--ink:#201c15;--line:#16130e;--band:#d7d2c2;--band2:#dcd7c7}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--paper);overflow:hidden;color:var(--ink);-webkit-font-smoothing:antialiased}
+html.fine,html.fine *{cursor:none}
+a{color:inherit;text-decoration:none}
+
+.frame{position:fixed;inset:14px;border-radius:34px;overflow:hidden;background:var(--paper);isolation:isolate}
+.frame::after{content:"";position:absolute;inset:0;border:6px solid var(--line);border-radius:34px;pointer-events:none;z-index:30}
+#shade{position:absolute;left:-12%;top:-12%;width:124%;height:124%;mix-blend-mode:multiply;opacity:.4;pointer-events:none;z-index:25;will-change:transform}
+
+#scene{position:absolute;left:0;top:0;transform-origin:0 0}
+#scene>*{position:absolute}
+svg.w{left:0;top:0;overflow:visible;pointer-events:none}
+svg.w path{vector-effect:none}
+
+.spr{background-repeat:no-repeat;will-change:transform}
+#ship{background-size:100% 100%;transform-origin:50% 100%}
+#capt{transform-origin:45% 100%}
+#palm{transform-origin:22% 100%;clip-path:polygon(0 0,100% 0,100% 61%,46% 61%,46% 100%,0 100%)}
+
+/* copy */
+.t1{left:150px;top:292px;width:660px;white-space:nowrap}
+.t1 .eb{font:400 24px/1 "Sorts Mill Goudy",serif;letter-spacing:.18em;text-transform:uppercase}
+h1,h2{font-family:"Goudy Bookletter 1911","Sorts Mill Goudy",serif;font-weight:400;text-transform:uppercase;letter-spacing:-.045em}
+h1{font-size:86px;line-height:.92;margin-top:24px}
+.pill{display:inline-block;position:relative;font:600 18px/1 "Josefin Sans",sans-serif;text-transform:uppercase;letter-spacing:.02em;
+  border:3px solid var(--line);border-radius:999px;background:#ece7d8;box-shadow:0 7px 0 -1px var(--paper),0 7px 0 2px var(--line);transition:transform .25s,box-shadow .25s;cursor:pointer}
+.pill:hover{transform:translateY(3px);box-shadow:0 4px 0 -1px var(--paper),0 4px 0 2px var(--line)}
+.t1 .pill{margin-top:36px;padding:20px 58px 16px}
+.t2{left:980px;top:430px;width:560px}
+h2{font-size:72px;line-height:.98}
+.t2 p{margin-top:20px;font:700 14px/1.68 "Open Sans",sans-serif;letter-spacing:.11em;text-transform:uppercase}
+.btnw{display:inline-block;position:relative;margin-top:28px}
+.t2 .pill{font-size:16px;padding:15px 38px 12px}
+.tick{position:absolute;top:-15px;width:22px;height:4px;border-radius:2px;background:var(--line)}
+.tick.a{left:-30px;transform:rotate(24deg)}.tick.b{left:-16px;top:-23px;width:13px;transform:rotate(58deg)}.tick.c{right:-30px;transform:rotate(-30deg)}
+
+/* chrome */
+.logo{position:absolute;left:5%;top:52px;z-index:20;display:flex;align-items:center;gap:10px;font:400 28px/1 "Goudy Bookletter 1911",serif;letter-spacing:-.02em}
+.logo svg{width:26px;height:30px;flex-shrink:0}
+nav{position:absolute;right:5%;top:58px;z-index:20;display:flex;gap:clamp(20px,4.5vw,72px)}
+nav a{position:relative;font:700 12.5px/1 "Open Sans",sans-serif;letter-spacing:.15em;text-transform:uppercase;padding:6px 0;cursor:pointer}
+nav a svg{position:absolute;left:100%;top:-4px;margin-left:7px;width:17px;height:21px;opacity:0;transform:translateY(-10px) rotate(-30deg);transform-origin:50% 0;transition:opacity .2s,transform .55s cubic-bezier(.3,1.9,.5,1)}
+nav a:hover svg{opacity:1;transform:none}
+
+/* cursor */
+#cur,#ping{position:fixed;left:0;top:0;z-index:150;pointer-events:none;border-radius:50%;display:none}
+html.fine #cur,html.fine #ping{display:block}
+#cur{width:var(--ring,40px);height:var(--ring,40px);margin:calc(var(--ring,40px)/-2);border:5px solid var(--line)}
+#ping{width:var(--ring,40px);height:var(--ring,40px);margin:calc(var(--ring,40px)/-2);border:1.5px solid var(--line);opacity:0}
+
+/* portrait */
+.portrait .t1{left:60px;top:190px;width:680px}
+.portrait #shade{opacity:.26}
+.portrait h1{font-size:98px}
+.portrait .t1 .eb{font-size:30px}
+.portrait .t1 .pill{font-size:24px;padding:25px 68px 20px}
+.portrait .t2{left:64px;top:1036px;width:680px}
+.portrait h2{font-size:92px}
+.portrait .t2 p{font-size:20px}
+.portrait .t2 .pill{font-size:24px;padding:22px 52px 18px}
+
+@media (max-width:760px){
+  .frame,.frame::after{border-radius:22px}
+  .frame{inset:8px}
+  .logo{top:24px;font-size:20px;left:18px}.logo svg{width:20px;height:23px}
+  nav{top:26px;right:18px;gap:16px}
+  nav a{font-size:9.5px;letter-spacing:.08em}
+  nav a:nth-child(n+4){display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+
+/* ═══════════════════════════════════════════════════
+   RESUME / ARTICLES LOGBOOK MODAL
+═══════════════════════════════════════════════════ */
+.resume-modal{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(22,19,14,0.65);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease;
+}
+.resume-modal.open{opacity:1;pointer-events:auto}
+.resume-card{
+  width:min(860px, calc(100vw - 32px));
+  max-height:calc(100vh - 48px);
+  overflow-y:auto;
+  background:var(--paper);
+  border:5px solid var(--line);
+  border-radius:28px;
+  box-shadow:0 24px 60px rgba(22,19,14,0.4);
+  padding:clamp(24px, 4vw, 48px);
+  color:var(--ink);
+  transform:scale(0.95) translateY(20px);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+  scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent;
+}
+.resume-modal.open .resume-card{transform:scale(1) translateY(0)}
+
+.resume-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:24px;border-bottom:3px solid var(--line);padding-bottom:18px;
+}
+.resume-title{
+  font-family:"Goudy Bookletter 1911",serif;font-size:clamp(32px,4vw,44px);
+  line-height:1;letter-spacing:-.03em;text-transform:uppercase;
+}
+.resume-subtitle{
+  font-family:"Open Sans",sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;margin-top:8px;opacity:.85;
+}
+.resume-close{
+  border:3px solid var(--line);background:#ece7d8;border-radius:50%;
+  width:40px;height:40px;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-weight:700;
+  box-shadow:0 3px 0 1px var(--line);transition:transform .15s;
+}
+.resume-close:hover{transform:scale(1.08)}
+
+/* Quick stats band */
+.stats-band{
+  display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+  gap:10px;margin-bottom:28px;
+}
+.stat-box{
+  background:#ece7d8;border:2px solid var(--line);border-radius:14px;
+  padding:12px 14px;text-align:center;
+}
+.stat-number{font-family:"Goudy Bookletter 1911",serif;font-size:28px;font-weight:700;line-height:1}
+.stat-desc{font-family:"Open Sans",sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;margin-top:4px;opacity:.75}
+
+/* Sections */
+.modal-sec{margin-bottom:28px}
+.modal-sec-title{
+  font-family:"Sorts Mill Goudy",serif;font-size:22px;text-transform:uppercase;
+  letter-spacing:.12em;border-bottom:2px dashed var(--line);padding-bottom:6px;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-sec-badge{font-family:"Josefin Sans",sans-serif;font-size:12px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;background:#ece7d8}
+
+/* Timeline entries */
+.entry-card{
+  background:#f0ebd9;border:2px solid var(--line);border-radius:16px;
+  padding:18px 20px;margin-bottom:14px;
+}
+.entry-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:"Open Sans",sans-serif;font-weight:700;font-size:14px;
+}
+.entry-company{font-size:16px;font-family:"Goudy Bookletter 1911",serif;font-weight:700;letter-spacing:-.01em}
+.entry-role{font-family:"Open Sans",sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.75;margin:4px 0 10px}
+.entry-bullets{padding-left:18px;font-family:"Open Sans",sans-serif;font-size:13px;line-height:1.65;margin-bottom:12px}
+.entry-bullets li{margin-bottom:6px}
+.entry-tags{display:flex;flex-wrap:wrap;gap:6px}
+.entry-tag{
+  font-family:"Open Sans",sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.06em;padding:3px 9px;border:1px solid var(--line);
+  border-radius:999px;background:#ece7d8;text-transform:uppercase;
+}
+
+/* Skills grid */
+.skills-container{
+  display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;
+}
+.skill-box{
+  background:#f0ebd9;border:2px solid var(--line);border-radius:14px;padding:14px;
+}
+.skill-box-title{font-family:"Open Sans",sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.skill-tags{display:flex;flex-wrap:wrap;gap:5px}
+.skill-tag{font-size:11px;font-family:"Open Sans",sans-serif;font-weight:600;padding:2px 8px;background:#ece7d8;border:1px solid var(--line);border-radius:6px}
+
+/* Projects */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px}
+.proj-card{
+  background:#f0ebd9;border:2px solid var(--line);border-radius:14px;padding:14px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.proj-title{font-family:"Goudy Bookletter 1911",serif;font-size:18px;font-weight:700}
+.proj-by{font-family:"Open Sans",sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.65;margin:2px 0 6px}
+.proj-desc{font-family:"Open Sans",sans-serif;font-size:12px;line-height:1.55;margin-bottom:10px}
+.proj-link{
+  font-family:"Open Sans",sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;text-decoration:underline;
+  text-underline-offset:3px;margin-top:auto;
+}
+
+/* Modal footer actions */
+.modal-footer{
+  display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;padding-top:20px;
+  border-top:2px solid var(--line);align-items:center;justify-content:space-between;
+}
+.action-btn{
+  font-family:"Josefin Sans",sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;border:2px solid var(--line);border-radius:999px;
+  background:#ece7d8;padding:10px 22px;display:inline-flex;align-items:center;gap:6px;
+  box-shadow:0 4px 0 1px var(--line);cursor:pointer;transition:transform .15s;
+}
+.action-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 1px var(--line)}
+.action-btn.primary{background:var(--line);color:var(--paper)}
+</style>
+</head>
+<body>
+
+<main class="frame" id="frame">
+
+  <!-- Logo -->
+  <div class="logo">
+    <svg viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <circle cx="13" cy="4.5" r="2.8"/>
+      <path d="M13 7.5V28M7 12h12M2.5 19c.6 5.5 5.5 9 10.5 9s9.9-3.5 10.5-9"/>
+      <path d="m1 21 1.5-2.5L5 20.5M25 21l-1.5-2.5-2.5 2"/>
+    </svg>
+    Shubhransh Gupta
+  </div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" data-go="0">About
+      <svg viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <circle cx="13" cy="4.5" r="2.8"/>
+        <path d="M13 7.5V28M7 12h12M2.5 19c.6 5.5 5.5 9 10.5 9s9.9-3.5 10.5-9"/>
+      </svg>
+    </a>
+    <a href="#" data-go="1">Career
+      <svg viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <circle cx="13" cy="4.5" r="2.8"/>
+        <path d="M13 7.5V28M7 12h12M2.5 19c.6 5.5 5.5 9 10.5 9s9.9-3.5 10.5-9"/>
+      </svg>
+    </a>
+    <a href="#" id="nav-resume">Resume
+      <svg viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <circle cx="13" cy="4.5" r="2.8"/>
+        <path d="M13 7.5V28M7 12h12M2.5 19c.6 5.5 5.5 9 10.5 9s9.9-3.5 10.5-9"/>
+      </svg>
+    </a>
+    <a href="#" id="nav-projects">Projects
+      <svg viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <circle cx="13" cy="4.5" r="2.8"/>
+        <path d="M13 7.5V28M7 12h12M2.5 19c.6 5.5 5.5 9 10.5 9s9.9-3.5 10.5-9"/>
+      </svg>
+    </a>
+    <a href="mailto:gupta.subhransh@gmail.com">Contact
+      <svg viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <circle cx="13" cy="4.5" r="2.8"/>
+        <path d="M13 7.5V28M7 12h12M2.5 19c.6 5.5 5.5 9 10.5 9s9.9-3.5 10.5-9"/>
+      </svg>
+    </a>
+  </nav>
+
+  <!-- Scene -->
+  <div id="scene">
+
+    <!-- Cloud -->
+    <div class="spr" id="cloudA">
+      <svg viewBox="0 0 300 80" width="300" height="80">
+        <path fill="#d3cebe" d="M0 79c14-3 26-3 38-10-4-16 10-30 30-26 6-22 42-34 62-16 16-12 42-6 50 14 10-2 18 2 22 8 24 22 66 26 98 30z"/>
+      </svg>
+    </div>
+
+    <!-- Back waves -->
+    <svg class="w" id="wBack"></svg>
+
+    <!-- Scene 1: Open sea / Intro -->
+    <div class="t1" id="t1">
+      <span class="eb">Senior iOS Developer · Coupang</span>
+      <h1>Building iOS<br>for millions</h1>
+      <a class="pill" href="#" data-go="1">Explore Career</a>
+    </div>
+
+    <!-- Ship -->
+    <div class="spr" id="ship"></div>
+
+    <!-- Front waves: covers hull bottom and later t1 copy -->
+    <svg class="w" id="wFront"></svg>
+
+    <!-- Island sprites (slide in from left / bottom) -->
+    <div class="spr" id="palm"></div>
+    <div class="spr" id="capt"></div>
+    <div class="spr" id="chest"></div>
+    <div class="spr" id="bushL"></div>
+    <div class="spr" id="bushR"></div>
+
+    <!-- Scene 2: Island / Career impact -->
+    <div class="t2" id="t2">
+      <h2 id="h2">Scale &amp;<br>Open Source</h2>
+      <p id="p2">5+ years shipping 99.9% crash-free platforms at Coupang, Navi, MakeMyTrip &amp; Nuclei. Open source contributor to Apple &amp; Google.</p>
+      <span class="btnw" id="btn2">
+        <i class="tick a"></i><i class="tick b"></i><i class="tick c"></i>
+        <a class="pill" href="#" id="read-resume-btn">Read Full Resume</a>
+      </span>
+    </div>
+
+  </div><!-- /scene -->
+
+  <!-- Palm shade -->
+  <canvas id="shade" width="64" height="36"></canvas>
+
+</main>
+
+<!-- Custom cursor -->
+<div id="ping"></div>
+<div id="cur"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     COMPREHENSIVE RESUME MODAL
+═══════════════════════════════════════════════════ -->
+<div class="resume-modal" id="resume-modal" role="dialog" aria-modal="true" aria-label="Shubhransh Gupta Resume">
+  <div class="resume-card" id="resume-card">
+
+    <div class="resume-header">
+      <div>
+        <h2 class="resume-title">Shubhransh Gupta</h2>
+        <div class="resume-subtitle">Senior iOS Developer (Primarily) · SDE-2 at Coupang · Bengaluru, India</div>
+      </div>
+      <button class="resume-close" id="resume-close" aria-label="Close Resume">✕</button>
+    </div>
+
+    <!-- Key Metrics Band -->
+    <div class="stats-band">
+      <div class="stat-box">
+        <div class="stat-number">5+</div>
+        <div class="stat-desc">Years in iOS</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">99.9%</div>
+        <div class="stat-desc">Crash-Free Stability</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">50M+</div>
+        <div class="stat-desc">Daily Active Users</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">8+</div>
+        <div class="stat-desc">Major OSS Repos</div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="modal-sec">
+      <h3 class="modal-sec-title">Executive Summary <span class="modal-sec-badge">Overview</span></h3>
+      <p style="font-family:'Open Sans',sans-serif;font-size:13.5px;line-height:1.7;margin-bottom:8px;">
+        Senior iOS Developer specializing in real-time, high-concurrency mobile platforms. Experienced across India's top consumer tech ecosystems — Coupang, Navi, MakeMyTrip, and Nuclei. Architecting with Swift 6.0 Actors, Structured Concurrency, SPM modular frameworks, and SwiftUI to eliminate thread bottlenecks and achieve rock-solid 99.9% crash-free stability.
+      </p>
+    </div>
+
+    <!-- Experience Timeline -->
+    <div class="modal-sec" id="sec-experience">
+      <h3 class="modal-sec-title">Work Experience <span class="modal-sec-badge">4 Chapters</span></h3>
+
+      <!-- Coupang -->
+      <div class="entry-card">
+        <div class="entry-head">
+          <span class="entry-company">Coupang</span>
+          <span>Mar 2026 – Present</span>
+        </div>
+        <div class="entry-role">Senior iOS Engineer · SDE-2 · Consumer E-Commerce Platform</div>
+        <ul class="entry-bullets">
+          <li>Architecting and shipping critical iOS capabilities for Coupang's high-velocity consumer shopping platform serving millions of active shoppers.</li>
+          <li>Enforcing Swift 6.0 structured concurrency and Actor isolation across payment and checkout pipelines.</li>
+          <li>Proactively tracking runtime performance and memory telemetry to safeguard 99.9%+ crash-free uptime.</li>
+        </ul>
+        <div class="entry-tags">
+          <span class="entry-tag">Swift 6.0</span><span class="entry-tag">SwiftUI</span><span class="entry-tag">Actors &amp; Concurrency</span><span class="entry-tag">E-Commerce Scale</span>
+        </div>
+      </div>
+
+      <!-- Navi -->
+      <div class="entry-card">
+        <div class="entry-head">
+          <span class="entry-company">Navi</span>
+          <span>May 2025 – Mar 2026</span>
+        </div>
+        <div class="entry-role">Software Development Engineer 2 · High-Scale FinTech</div>
+        <ul class="entry-bullets">
+          <li>Modernized application lifecycle architecture by spearheading the migration from legacy AppDelegate to SceneDelegate.</li>
+          <li>Implemented CoreSpotlight-based search indexing directly into iOS system search, boosting in-app deep linking and discovery.</li>
+          <li>Standardized runtime and compile-time dependency injection across feature pods using Swinject.</li>
+          <li>Awarded <strong>Best Innovative Project at Navi Hackathon</strong> for conceiving and architecting <strong>Cobalion</strong>, an AI-driven regulatory compliance parser.</li>
+        </ul>
+        <div class="entry-tags">
+          <span class="entry-tag">Swift</span><span class="entry-tag">SceneDelegate</span><span class="entry-tag">CoreSpotlight</span><span class="entry-tag">Swinject (DI)</span><span class="entry-tag">UPI FinTech</span>
+        </div>
+      </div>
+
+      <!-- MakeMyTrip -->
+      <div class="entry-card">
+        <div class="entry-head">
+          <span class="entry-company">MakeMyTrip</span>
+          <span>Jan 2024 – May 2025</span>
+        </div>
+        <div class="entry-role">Senior Software Engineer · Consumer Travel Platform</div>
+        <ul class="entry-bullets">
+          <li>Elevated user conversion and repeat transactions by architecting and rolling out <strong>Zero Cancellation</strong> and <strong>Free Date Change Insurance</strong> features in SwiftUI.</li>
+          <li>Accelerated cross-team deployment by architecting the <strong>Unified Flights SDK</strong> using SPM and CocoaPods across multiple pods.</li>
+          <li>Led an iOS engineering pod, establishing best practices in memory safety and hosting Swift concurrency workshops.</li>
+        </ul>
+        <div class="entry-tags">
+          <span class="entry-tag">SwiftUI</span><span class="entry-tag">UIKit</span><span class="entry-tag">SPM</span><span class="entry-tag">Combine</span><span class="entry-tag">MVVM</span>
+        </div>
+      </div>
+
+      <!-- Nuclei -->
+      <div class="entry-card">
+        <div class="entry-head">
+          <span class="entry-company">Nuclei</span>
+          <span>May 2021 – Dec 2023</span>
+        </div>
+        <div class="entry-role">iOS Developer · SDE-1 · Enterprise Banking SDKs</div>
+        <ul class="entry-bullets">
+          <li>Engineered and integrated critical mobile banking modules (Fund Transfer, Scan &amp; Pay, Onboarding) into enterprise banking client apps.</li>
+          <li>Achieved strict national regulatory standards by integrating UPI with the NPCI Common Library (CL).</li>
+          <li>Refactored CoreData background concurrency and sync queues for seamless offline transaction integrity.</li>
+        </ul>
+        <div class="entry-tags">
+          <span class="entry-tag">Swift</span><span class="entry-tag">NPCI UPI</span><span class="entry-tag">CoreData Concurrency</span><span class="entry-tag">Security &amp; Encryption</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Open Source & Projects -->
+    <div class="modal-sec" id="sec-projects">
+      <h3 class="modal-sec-title">Open Source &amp; Systems <span class="modal-sec-badge">Contributions</span></h3>
+
+      <div class="proj-grid">
+        <div class="proj-card">
+          <div class="proj-title">ShubhranshProxy</div>
+          <div class="proj-by">Personal OSS · Native macOS</div>
+          <div class="proj-desc">High-performance network debugging proxy built entirely in pure Swift. Features domain grouping, selective SSL interception, zero-config mobile Wi-Fi capture, and HAR export.</div>
+          <a class="proj-link" href="https://shubhransh-gupta.github.io/ShubhranshProxy/" target="_blank" rel="noopener">Visit Project ↗</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-title">JSONLens</div>
+          <div class="proj-by">Personal OSS · Developer Workbench</div>
+          <div class="proj-desc">Privacy-first JSON analyzer with tree, graph, and table views, dual-pane semantic diffing, and zero server logging for maximum enterprise data privacy.</div>
+          <a class="proj-link" href="https://shubhransh-gupta.github.io/jsonlens/" target="_blank" rel="noopener">Visit Project ↗</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-title">swift-argument-parser</div>
+          <div class="proj-by">Apple Official Repo · PR #961</div>
+          <div class="proj-desc">Resolved a core flag-parsing edge case where option-assignment flags silently swallowed subsequent positional tokens.</div>
+          <a class="proj-link" href="https://github.com/apple/swift-argument-parser/pull/961" target="_blank" rel="noopener">View PR on GitHub ↗</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-title">mlx-swift</div>
+          <div class="proj-by">Apple ML Explore · PR #467</div>
+          <div class="proj-desc">Contributed to Apple's machine learning array framework, improving on-device model quantization and Metal GPU acceleration.</div>
+          <a class="proj-link" href="https://github.com/ml-explore/mlx-swift/pull/467" target="_blank" rel="noopener">View PR on GitHub ↗</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-title">osv-scanner</div>
+          <div class="proj-by">Google Security · PR #3049</div>
+          <div class="proj-desc">Contributed enhancements to Google's open-source dependency vulnerability scanner for Swift ecosystems.</div>
+          <a class="proj-link" href="https://github.com/google/osv-scanner/pull/3049" target="_blank" rel="noopener">View PR on GitHub ↗</a>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-title">AppLovin MAX SDK</div>
+          <div class="proj-by">AppLovin · PR #488</div>
+          <div class="proj-desc">Resolved iOS rendering and lifecycle bugs in the official React Native monetization SDK.</div>
+          <a class="proj-link" href="https://github.com/AppLovin/AppLovin-MAX-React-Native/pull/488" target="_blank" rel="noopener">View PR on GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Matrix -->
+    <div class="modal-sec">
+      <h3 class="modal-sec-title">Core Competencies <span class="modal-sec-badge">Skills</span></h3>
+      <div class="skills-container">
+        <div class="skill-box">
+          <div class="skill-box-title">Languages &amp; UI</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Swift 6.0</span><span class="skill-tag">SwiftUI</span><span class="skill-tag">UIKit</span><span class="skill-tag">Objective-C</span><span class="skill-tag">Python</span>
+          </div>
+        </div>
+        <div class="skill-box">
+          <div class="skill-box-title">Concurrency &amp; Architecture</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Swift Actors</span><span class="skill-tag">Async/Await</span><span class="skill-tag">TaskGroup</span><span class="skill-tag">MVVM</span><span class="skill-tag">VIPER</span><span class="skill-tag">Swinject DI</span>
+          </div>
+        </div>
+        <div class="skill-box">
+          <div class="skill-box-title">Frameworks &amp; Systems</div>
+          <div class="skill-tags">
+            <span class="skill-tag">CoreData</span><span class="skill-tag">CoreSpotlight</span><span class="skill-tag">CoreML</span><span class="skill-tag">MLX-Swift</span><span class="skill-tag">Metal GPU</span><span class="skill-tag">Network.framework</span>
+          </div>
+        </div>
+        <div class="skill-box">
+          <div class="skill-box-title">DevOps &amp; Testing</div>
+          <div class="skill-tags">
+            <span class="skill-tag">SPM</span><span class="skill-tag">CocoaPods</span><span class="skill-tag">Fastlane</span><span class="skill-tag">Xcode Cloud</span><span class="skill-tag">GitHub Actions</span><span class="skill-tag">XCTest</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="modal-sec">
+      <h3 class="modal-sec-title">Education &amp; Honors</h3>
+      <div class="entry-card" style="margin-bottom:0">
+        <div class="entry-head">
+          <span class="entry-company">BNM Institute of Technology</span>
+          <span>Aug 2017 – Jun 2021</span>
+        </div>
+        <div class="entry-role">B.E. Computer Science and Engineering · GPA 8.45 / 10</div>
+        <ul class="entry-bullets" style="margin-bottom:0">
+          <li>Ranked #1 College-Wide on GeeksForGeeks (2021).</li>
+          <li>Winner / Champion at Innovative Project Labs (2018).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="modal-footer">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="action-btn primary" href="1bg17cs094.pdf" target="_blank" rel="noopener">
+          <span>⬇ Download PDF Resume</span>
+        </a>
+        <a class="action-btn" href="mailto:gupta.subhransh@gmail.com">
+          <span>✉ Dispatch Email</span>
+        </a>
+      </div>
+      <div style="display:flex;gap:12px">
+        <a class="action-btn" href="https://github.com/shubhransh-gupta" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="action-btn" href="https://www.linkedin.com/in/shubhransh-gupta/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+/* ═══════════════════════════════════════════════════
+   ASSETS
+═══════════════════════════════════════════════════ */
+const P      = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_';
+const SHIP   = P + '20261031_024714_39df675e-5060-4528-87dc-9d0c274815aa.png&w=1600&q=90';
+const CAPT   = P + '20261031_024703_a0298b6a-0117-47f1-8462-4be671d0407e.png&w=2048&q=90';
+const PLANTS = P + '20261031_024704_3ccf1ac2-bec7-4fdb-bfce-ac19eca8db28.png&w=2048&q=90';
+
+const SH = { w: 2048, h: 1360 };
+
+const BOX = {
+  capt:  [CAPT,   34,   153, 1246, 1074],
+  chest: [CAPT,   1475, 830,  446,  392],
+  palm:  [PLANTS, 19,    32,  910, 1284],
+  bushL: [PLANTS, 515,  820,  860,  496],
+  bushR: [PLANTS, 1528, 908,  499,  405]
+};
+
+/* ═══════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════ */
+const LAY = {
+  land: {
+    w: 1600, h: 900,
+    wave: { y0: 748, y1: 272, gap0: 1, gap1: .6 },
+    ship:  { x0: 1130, w0: 710, x1: 1345, w1: 176 },
+    palm:  { x: -92,  y: -112, w: 620 },
+    capt:  { x: 120,  y: 318,  w: 540 },
+    chest: { x: 640,  y: 628,  w: 200 },
+    bushL: { x: 96,   y: 716,  w: 700 },
+    bushR: { x: 1370, y: 740,  w: 300 }
+  },
+  port: {
+    w: 800, h: 1500,
+    wave: { y0: 1300, y1: 430, gap0: 1, gap1: .7 },
+    ship:  { x0: 420, w0: 620, x1: 640, w1: 150 },
+    palm:  { x: -150, y: -60,  w: 560 },
+    capt:  { x: 20,   y: 440,  w: 600 },
+    chest: { x: 560,  y: 830,  w: 190 },
+    bushL: { x: -40,  y: 1330, w: 520 },
+    bushR: { x: 570,  y: 1340, w: 260 }
+  }
+};
+
+/* ═══════════════════════════════════════════════════
+   WAVE LAYERS
+═══════════════════════════════════════════════════ */
+const BACK = [
+  { dy: -100, a: 20, k: 1.5,  v: .9,   ph: 0,   fill: 'var(--band)'  },
+  { dy:  -52, a: 23, k: 1.9,  v: 1.15, ph: 1.7, fill: 'var(--paper)' }
+];
+const FRONT = [
+  { dy:   0, a: 25, k: 1.7,  v: 1.3,  ph: 3.1, fill: 'var(--band2)' },
+  { dy:  26, a: 18, k: 2.4,  v: 1.0,  ph: 4.4, span: [.06, .44]      },
+  { dy:  48, a: 22, k: 1.45, v: 1.4,  ph: .6,  fill: 'var(--paper)'  },
+  { dy:  76, a: 15, k: 2.1,  v: 1.2,  ph: 5.1, span: [.52, .97]      },
+  { dy: 104, a: 24, k: 1.8,  v: 1.25, ph: 2.2, fill: 'var(--paper)'  },
+  { dy: 130, a: 14, k: 2.7,  v: 1.0,  ph: 1.1, span: [.0,  .62]      },
+  { dy: 158, a: 20, k: 1.6,  v: 1.1,  ph: 3.8                        }
+];
+
+/* ═══════════════════════════════════════════════════
+   DOM REFS
+═══════════════════════════════════════════════════ */
+const frame  = document.getElementById('frame');
+const scene  = document.getElementById('scene');
+const wBack  = document.getElementById('wBack');
+const wFront = document.getElementById('wFront');
+const shipEl = document.getElementById('ship');
+const cloudA = document.getElementById('cloudA');
+const palmEl = document.getElementById('palm');
+const captEl = document.getElementById('capt');
+const chestEl= document.getElementById('chest');
+const bushLEl= document.getElementById('bushL');
+const bushREl= document.getElementById('bushR');
+const t1El   = document.getElementById('t1');
+const t2El   = document.getElementById('t2');
+const h2El   = document.getElementById('h2');
+const p2El   = document.getElementById('p2');
+const btn2El = document.getElementById('btn2');
+const shadeEl= document.getElementById('shade');
+const curEl  = document.getElementById('cur');
+const pingEl = document.getElementById('ping');
+
+/* ═══════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════ */
+const t0  = performance.now();
+let L     = LAY.land;
+let S=1, DX=0, DY=0;
+let p=0, pFrom=0, pTo=0, pT0=-1;
+let last  = t0;
+const reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ═══════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════ */
+const mix   = (a, b, t) => a + (b - a) * t;
+const clamp = (v, lo, hi) => v < lo ? lo : v > hi ? hi : v;
+const seg   = (v, a, b) => clamp((v - a) / (b - a), 0, 1);
+const io    = k => k < .5 ? 4*k*k*k : 1 - Math.pow(-2*k+2, 3)/2;
+const out   = k => 1 - Math.pow(1 - k, 3);
+const back  = k => 1 + 2.4*Math.pow(k-1,3) + 1.4*Math.pow(k-1,2);
+
+function yAt(l, x, t, p) {
+  const W    = L.wave;
+  const base = mix(W.y0, W.y1, p) + l.dy * mix(W.gap0, W.gap1, p);
+  const a    = l.a * mix(1, .72, p);
+  const f    = 2 * Math.PI / 1100 * l.k * (1 - .35 * p);
+  return base
+    + a * Math.sin(f * x + t * l.v + l.ph)
+    + a * .45 * Math.sin(f * 2.3 * x - t * l.v * .7 + l.ph * 1.7);
+}
+
+/* ═══════════════════════════════════════════════════
+   SPRITE SETUP
+═══════════════════════════════════════════════════ */
+function setSpr(el, key) {
+  const lp           = L[key];
+  const [url, sx, sy, sw, sh] = BOX[key];
+  const ew           = lp.w;
+  const eh           = ew * sh / sw;
+  el.style.width     = ew + 'px';
+  el.style.height    = eh + 'px';
+  el.style.left      = lp.x + 'px';
+  el.style.top       = lp.y + 'px';
+  el.style.backgroundImage    = `url(${url})`;
+  el.style.backgroundSize     = `${SH.w/sw*100}% ${SH.h/sh*100}%`;
+  el.style.backgroundPosition = `${sx/(SH.w-sw)*100}% ${sy/(SH.h-sh)*100}%`;
+}
+
+/* ═══════════════════════════════════════════════════
+   WAVE SVG
+═══════════════════════════════════════════════════ */
+const NS = 'http://www.w3.org/2000/svg';
+
+function initWave(svgEl, layers) {
+  while (svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
+  layers.forEach(() => {
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('stroke', 'var(--line)');
+    path.setAttribute('stroke-width', '3.2');
+    path.setAttribute('stroke-linecap', 'round');
+    svgEl.appendChild(path);
+  });
+}
+
+function buildWave(svgEl, layers, t, p) {
+  const xFrom  = -(DX + 20);
+  const xTo    = L.w + DX + 20;
+  const bottom = L.h + DY + 40;
+  const paths  = svgEl.querySelectorAll('path');
+
+  layers.forEach((layer, i) => {
+    const path = paths[i];
+    const pts = [];
+    for (let x = xFrom; x < xTo + 22; x += 22) {
+      const cx = Math.min(x, xTo);
+      pts.push([cx, yAt(layer, cx, t, p)]);
+    }
+    if (pts[pts.length-1][0] < xTo) pts.push([xTo, yAt(layer, xTo, t, p)]);
+
+    if (layer.span) {
+      const sx0 = xFrom + (xTo - xFrom) * layer.span[0];
+      const sx1 = xFrom + (xTo - xFrom) * layer.span[1];
+      const sp  = pts.filter(([x]) => x >= sx0 - 1 && x <= sx1 + 1);
+      if (sp.length < 2) { path.setAttribute('d', ''); return; }
+      let d = `M${sp[0][0]} ${sp[0][1]}`;
+      for (let j = 1; j < sp.length; j++) d += `L${sp[j][0]} ${sp[j][1]}`;
+      path.setAttribute('fill', 'none');
+      path.setAttribute('d', d);
+    } else if (layer.fill) {
+      let d = `M${pts[0][0]} ${pts[0][1]}`;
+      for (let j = 1; j < pts.length; j++) d += `L${pts[j][0]} ${pts[j][1]}`;
+      d += `L${xTo} ${bottom}L${xFrom} ${bottom}Z`;
+      path.setAttribute('fill', layer.fill);
+      path.setAttribute('d', d);
+    } else {
+      let d = `M${pts[0][0]} ${pts[0][1]}`;
+      for (let j = 1; j < pts.length; j++) d += `L${pts[j][0]} ${pts[j][1]}`;
+      path.setAttribute('fill', 'none');
+      path.setAttribute('d', d);
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   PALM SHADE CANVAS
+═══════════════════════════════════════════════════ */
+function initShade() {
+  const ctx = shadeEl.getContext('2d');
+  ctx.scale(.5, .5);
+  ctx.fillStyle = 'white';
+  ctx.fillRect(-40, -40, 208, 152);
+  ctx.strokeStyle = 'rgba(120,114,96,.9)';
+  ctx.lineCap     = 'round';
+  const fronds = [
+    [-10, 26,  38,  -8, 8],
+    [ -8, 46,  58,  -2, 5],
+    [-10, 62,  74,   6, 4],
+    [ 14, 78,  96,  16, 4],
+    [ 40, 82, 118,  22, 3],
+    [ 78, 80, 140,  34, 5],
+    [-12, 74,  22,  56, 6]
+  ];
+  fronds.forEach(([x0,y0,x1,y1,lw]) => {
+    ctx.lineWidth = lw;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.quadraticCurveTo((x0+x1)/2+6, (y0+y1)/2+8, x1, y1);
+    ctx.stroke();
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   RESIZE
+═══════════════════════════════════════════════════ */
+function resize() {
+  const W    = frame.clientWidth;
+  const H    = frame.clientHeight;
+  const port = H > W;
+  document.documentElement.classList.toggle('portrait', port);
+  L  = port ? LAY.port : LAY.land;
+  S  = Math.min(W / L.w, H / L.h);
+  DX = (W/S - L.w) / 2;
+  DY = (H/S - L.h) / 2;
+  scene.style.transform = `translate(${DX*S}px,${DY*S}px) scale(${S})`;
+
+  wBack.setAttribute('width',  L.w);
+  wBack.setAttribute('height', L.h);
+  wFront.setAttribute('width',  L.w);
+  wFront.setAttribute('height', L.h);
+
+  const sprMap = { palm:palmEl, capt:captEl, chest:chestEl, bushL:bushLEl, bushR:bushREl };
+  Object.keys(sprMap).forEach(k => setSpr(sprMap[k], k));
+}
+
+/* ═══════════════════════════════════════════════════
+   TRANSITION TRIGGER
+═══════════════════════════════════════════════════ */
+function go(to) {
+  to = +to;
+  if (pTo === to && Math.abs(p - to) < .01) return;
+  pFrom = p;
+  pTo   = to;
+  pT0   = performance.now();
+}
+
+/* ═══════════════════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════════════════ */
+let cx=-200, cy=-200, ox=-200, oy=-200;
+let pressed=false, onLink=false;
+let pingT=-Infinity, pingX=0, pingY=0;
+
+function initCursor() {
+  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  document.documentElement.classList.add('fine');
+
+  window.addEventListener('pointermove', e => { cx = e.clientX; cy = e.clientY; });
+  window.addEventListener('pointerdown', e => {
+    pressed = true;
+    pingX = e.clientX; pingY = e.clientY; pingT = performance.now();
+  });
+  window.addEventListener('pointerup', () => { pressed = false; });
+
+  document.querySelectorAll('a,[data-go],button').forEach(el => {
+    el.addEventListener('pointerenter', () => { onLink = true; });
+    el.addEventListener('pointerleave', () => { onLink = false; });
+  });
+}
+
+function tickCursor(now, dt) {
+  const f = 1 - Math.exp(-Math.min(dt, .05) * 22);
+  ox += (cx - ox) * f;
+  oy += (cy - oy) * f;
+  const sc = pressed ? .7 : onLink ? 1.35 : 1;
+  curEl.style.transform = `translate(${ox}px,${oy}px) scale(${sc})`;
+
+  const pk = seg(now, pingT, pingT + 650);
+  pingEl.style.opacity   = pk < 1 ? (1 - pk) : 0;
+  pingEl.style.transform = `translate(${pingX}px,${pingY}px) scale(${1 + out(pk) * 1.9})`;
+}
+
+/* ═══════════════════════════════════════════════════
+   RENDER (Frame loop)
+═══════════════════════════════════════════════════ */
+function render(now) {
+  const dt = Math.min((now - last) / 1000, .05);
+  last     = now;
+  const t  = reduced ? 0 : (now - t0) / 1000;
+
+  // ── Transition calculation (prevents NaN when idle) ──
+  const DUR = reduced ? 1 : 2100;
+  if (pT0 > 0) {
+    const k = seg(now, pT0, pT0 + DUR);
+    p = mix(pFrom, pTo, io(k));
+    if (k >= 1) pT0 = -1;
+  } else {
+    p = pTo;
+  }
+
+  // ── Waves ──
+  buildWave(wBack,  BACK,  t, p);
+  buildWave(wFront, FRONT, t, p);
+
+  // ── Ship ──
+  const c    = L.ship;
+  const sw   = mix(c.w0, c.w1, p);
+  const sx   = mix(c.x0, c.x1, p);
+  const sh   = sw * 2002 / 1961;
+  const wy   = yAt(FRONT[0], sx, t, p);
+  shipEl.style.width     = sw + 'px';
+  shipEl.style.height    = sh + 'px';
+  shipEl.style.left      = (sx - sw/2) + 'px';
+  shipEl.style.top       = (wy + sw*.05 - sh) + 'px';
+  const slope = (yAt(FRONT[0], sx+90, t, p) - yAt(FRONT[0], sx-90, t, p)) / 180;
+  shipEl.style.transform = `rotate(${Math.atan(slope)*57.3*.75}deg)`;
+
+  // ── Cloud ──
+  const totalW  = L.w + 700;
+  const cloudX  = ((L.w*.72 - t*16) % totalW + totalW) % totalW - 400;
+  cloudA.style.left    = cloudX + 'px';
+  cloudA.style.top     = (document.documentElement.classList.contains('portrait') ? 110 : 150) + 'px';
+  cloudA.style.opacity = 1 - seg(p, .3, .7);
+
+  // ── Intro ──
+  const intro = out(seg(now, t0 + 100, t0 + 600));
+
+  // ── Scene 1 text (.t1) ──
+  t1El.style.opacity       = intro * (1 - seg(p, .62, .7));
+  t1El.style.transform     = `translateY(${(1-intro)*26 - p*40}px)`;
+  t1El.style.pointerEvents = p > .1 ? 'none' : 'auto';
+
+  // ── Island entrance ──
+  const e = io(seg(p, .04, .92));
+
+  // Palm
+  palmEl.style.transform = `translate(${mix(-L.palm.w-80, 0, e)}px,${mix(-170, 0, e)}px) rotate(${Math.sin(t*.8)*.7}deg)`;
+
+  // Captain
+  captEl.style.transform = `translate(${mix(-L.capt.w-160, 0, e)}px,0) rotate(${Math.sin(t*1.1)*.5*p}deg)`;
+
+  // Chest
+  chestEl.style.transform = `translate(${mix(-L.chest.w-720, 0, e)}px,${mix(120, 0, e)}px)`;
+
+  // ── Foreground bushes ──
+  const b = out(seg(p, .5, 1));
+  bushLEl.style.transform = `translateY(${mix(340, 0, b)}px)`;
+  bushREl.style.transform = `translateY(${mix(300, 0, b)}px)`;
+
+  // ── Scene 2 text (t2) ──
+  const hk = seg(p, .42, .82);
+  h2El.style.opacity   = hk * hk;
+  h2El.style.transform = `translateY(${mix(70, 0, out(hk))}px)`;
+
+  const pk2 = seg(p, .76, .92);
+  p2El.style.opacity   = pk2;
+  p2El.style.transform = `translateY(${mix(16, 0, pk2)}px)`;
+
+  const bk = seg(p, .86, 1);
+  btn2El.style.opacity       = bk;
+  btn2El.style.transform     = `scale(${mix(.7, 1, back(bk))})`;
+  t2El.style.pointerEvents   = p > .9 ? 'auto' : 'none';
+
+  // ── Palm shade drift ──
+  shadeEl.style.transform = `translate(${Math.sin(t*.35)*2.2}%,${Math.cos(t*.27)*1.6}%) rotate(${Math.sin(t*.22)*.8}deg)`;
+
+  // ── Cursor ──
+  tickCursor(now, dt);
+}
+
+/* ═══════════════════════════════════════════════════
+   EVENTS & MODAL LOGIC
+═══════════════════════════════════════════════════ */
+document.querySelectorAll('[data-go]').forEach(el => {
+  el.addEventListener('click', e => { e.preventDefault(); go(el.dataset.go); });
+});
+
+document.querySelectorAll('a[href="#"]').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
+});
+
+// Wheel scroll (deltaY > 8 => island, deltaY < -8 => ocean)
+let wLock = false;
+window.addEventListener('wheel', e => {
+  if (wLock) return;
+  if      (e.deltaY >  8) go(1);
+  else if (e.deltaY < -8) go(0);
+  if (Math.abs(e.deltaY) > 8) { wLock = true; setTimeout(() => { wLock = false; }, 1200); }
+}, { passive: true });
+
+// Touch swipe
+let ty0 = 0;
+window.addEventListener('touchstart', e => { ty0 = e.touches[0].clientY; }, { passive: true });
+window.addEventListener('touchend',   e => {
+  const dy = ty0 - e.changedTouches[0].clientY;
+  if (Math.abs(dy) > 50) go(dy > 0 ? 1 : 0);
+}, { passive: true });
+
+// Resume modal management
+const resumeModal = document.getElementById('resume-modal');
+const resumeCard  = document.getElementById('resume-card');
+const resumeClose = document.getElementById('resume-close');
+const navResume   = document.getElementById('nav-resume');
+const navProjects = document.getElementById('nav-projects');
+const readResumeBtn = document.getElementById('read-resume-btn');
+
+function openResume(targetSec) {
+  resumeModal.classList.add('open');
+  if (targetSec) {
+    setTimeout(() => {
+      const el = document.getElementById(targetSec);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  }
+}
+function closeResume() { resumeModal.classList.remove('open'); }
+
+if (navResume) navResume.addEventListener('click', e => { e.preventDefault(); openResume('sec-experience'); });
+if (navProjects) navProjects.addEventListener('click', e => { e.preventDefault(); openResume('sec-projects'); });
+if (readResumeBtn) readResumeBtn.addEventListener('click', e => { e.preventDefault(); openResume(); });
+if (resumeClose) resumeClose.addEventListener('click', closeResume);
+resumeModal.addEventListener('click', e => { if (e.target === resumeModal) closeResume(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeResume(); });
+
+/* ═══════════════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════════════ */
+shipEl.style.backgroundImage = `url(${SHIP})`;
+initWave(wBack,  BACK);
+initWave(wFront, FRONT);
+initShade();
+initCursor();
+resize();
+window.addEventListener('resize', resize);
+(function loop(now) { render(now); requestAnimationFrame(loop); })(t0);
+
+})();
+</script>
+</body>
+</html>
